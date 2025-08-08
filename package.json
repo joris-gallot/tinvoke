@@ -6,10 +6,24 @@
   "description": "A type-safe wrapper for Tauri's invoke function",
   "author": "Joris Gallot",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joris-gallot/tinvoke.git"
+  },
+  "keywords": [
+    "tauri",
+    "invoke",
+    "typescript",
+    "type-safe"
+  ],
+  "main": "dist/tinvoke.mjs",
+  "types": "dist/tinvoke.d.ts",
+  "files": ["dist"],
   "engines": {
     "node": "24.4.1"
   },
   "scripts": {
+    "build": "unbuild",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint",
@@ -22,6 +36,7 @@
     "@antfu/eslint-config": "^5.2.0",
     "eslint": "^9.32.0",
     "typescript": "~5.6.2",
+    "unbuild": "^3.6.0",
     "vitest": "^3.2.4"
   }
 }

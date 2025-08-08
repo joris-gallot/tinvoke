@@ -1,7 +1,7 @@
 import type { InvokeOptions } from '@tauri-apps/api/core'
-import type { RouteName } from '../src/route-map.js'
+import type { RouteName } from '../tinvoke.js'
 import { assertType, beforeEach, describe, it, vi } from 'vitest'
-import { tinvoke } from '../src/tinvoke.js'
+import { tinvoke } from '../tinvoke.js'
 
 vi.mock('@tauri-apps/api/core', () => ({
   invoke: vi.fn(() => Promise.resolve(null)),

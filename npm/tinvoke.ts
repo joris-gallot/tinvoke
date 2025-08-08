@@ -1,27 +1,37 @@
 import type { InvokeOptions } from '@tauri-apps/api/core'
-import type { RouteMap, RouteName } from './route-map.js'
+import type { RouteDefinition } from './types.js'
 import { invoke } from '@tauri-apps/api/core'
+
+export interface RouteMap {
+  get_user: RouteDefinition<{ id: number, name: string, email: string }>
+  create_task: RouteDefinition<{ taskId: string }, { title: string, description: string }>
+  delete_item: RouteDefinition<boolean, { itemId: number }>
+  list_files: RouteDefinition<string[]>
+  update_settings: RouteDefinition<void, { theme: 'light' | 'dark', language: string }>
+}
+
+export type RouteName = keyof RouteMap
 
 // Overload for routes without args (no second parameter)
 export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends undefined ? C : never
+  cmd: RouteMap[C]['args'] extends never ? C : never
 ): Promise<RouteMap[C]['response']>
 
 // Overload for routes without args (with options)
 export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends undefined ? C : never,
+  cmd: RouteMap[C]['args'] extends never ? C : never,
   options: InvokeOptions
 ): Promise<RouteMap[C]['response']>
 
 // Overload for routes with args (no options)
 export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends undefined ? never : C,
+  cmd: RouteMap[C]['args'] extends never ? never : C,
   args: RouteMap[C]['args']
 ): Promise<RouteMap[C]['response']>
 
 // Overload for routes with args (with options)
 export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends undefined ? never : C,
+  cmd: RouteMap[C]['args'] extends never ? never : C,
   args: RouteMap[C]['args'],
   options: InvokeOptions
 ): Promise<RouteMap[C]['response']>
