@@ -1,11 +1,10 @@
-import { describe, test, vi, beforeEach } from 'vitest'
-import { assertType } from 'vitest'
-import { tinvoke } from '../src/tinvoke.js'
 import type { InvokeOptions } from '@tauri-apps/api/core'
-import { RouteName } from '../src/route-map.js'
+import type { RouteName } from '../src/route-map.js'
+import { assertType, beforeEach, describe, it, vi } from 'vitest'
+import { tinvoke } from '../src/tinvoke.js'
 
 vi.mock('@tauri-apps/api/core', () => ({
-  invoke: vi.fn(() => Promise.resolve(null))
+  invoke: vi.fn(() => Promise.resolve(null)),
 }))
 
 describe('tinvoke type tests', () => {
@@ -13,92 +12,92 @@ describe('tinvoke type tests', () => {
     vi.clearAllMocks()
   })
 
-  test('should accept routes without args', () => {
-    assertType<Promise<{ id: number; name: string; email: string }>>(tinvoke('get_user'))
+  it('should accept routes without args', () => {
+    assertType<Promise<{ id: number, name: string, email: string }>>(tinvoke('get_user'))
     assertType<Promise<string[]>>(tinvoke('list_files'))
   })
 
-  test('should accept routes without args with options', () => {
+  it('should accept routes without args with options', () => {
     const options: InvokeOptions = { headers: { 'Custom-Header': 'value' } }
-    assertType<Promise<{ id: number; name: string; email: string }>>(tinvoke('get_user', options))
+    assertType<Promise<{ id: number, name: string, email: string }>>(tinvoke('get_user', options))
     assertType<Promise<string[]>>(tinvoke('list_files', options))
   })
 
-  test('should accept routes with args', () => {
+  it('should accept routes with args', () => {
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Test', description: 'Description' }))
     assertType<Promise<boolean>>(tinvoke('delete_item', { itemId: 123 }))
     assertType<Promise<void>>(tinvoke('update_settings', { theme: 'dark', language: 'en' }))
   })
 
-  test('should accept routes with args and options', () => {
+  it('should accept routes with args and options', () => {
     const options: InvokeOptions = { headers: { 'Custom-Header': 'value' } }
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Test', description: 'Description' }, options))
     assertType<Promise<boolean>>(tinvoke('delete_item', { itemId: 123 }, options))
     assertType<Promise<void>>(tinvoke('update_settings', { theme: 'light', language: 'fr' }, options))
   })
 
-  test('should constrain route names to valid keys', () => {
-    assertType<Promise<{ id: number; name: string; email: string }>>(tinvoke('get_user'))
+  it('should constrain route names to valid keys', () => {
+    assertType<Promise<{ id: number, name: string, email: string }>>(tinvoke('get_user'))
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Test', description: 'Description' }))
     assertType<Promise<string[]>>(tinvoke('list_files'))
   })
 
-  test('should maintain correct return types for get_user', () => {
-    assertType<Promise<{ id: number; name: string; email: string }>>(tinvoke('get_user'))
+  it('should maintain correct return types for get_user', () => {
+    assertType<Promise<{ id: number, name: string, email: string }>>(tinvoke('get_user'))
 
     const options: InvokeOptions = { headers: {} }
-    assertType<Promise<{ id: number; name: string; email: string }>>(tinvoke('get_user', options))
+    assertType<Promise<{ id: number, name: string, email: string }>>(tinvoke('get_user', options))
   })
 
-  test('should maintain correct return types for create_task', () => {
+  it('should maintain correct return types for create_task', () => {
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Test', description: 'Description' }))
 
     const options: InvokeOptions = { headers: {} }
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Test', description: 'Description' }, options))
   })
 
-  test('should require correct argument types for create_task', () => {
+  it('should require correct argument types for create_task', () => {
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Task 1', description: 'First task' }))
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Task 2', description: 'Second task' }))
   })
 
-  test('should work with different InvokeOptions configurations', () => {
-    const options1: InvokeOptions = { headers: { 'Authorization': 'Bearer token' } }
+  it('should work with different InvokeOptions configurations', () => {
+    const options1: InvokeOptions = { headers: { Authorization: 'Bearer token' } }
     const options2: InvokeOptions = { headers: { 'Content-Type': 'application/json' } }
 
-    assertType<Promise<{ id: number; name: string; email: string }>>(tinvoke('get_user', options1))
+    assertType<Promise<{ id: number, name: string, email: string }>>(tinvoke('get_user', options1))
     assertType<Promise<string[]>>(tinvoke('list_files', options2))
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Test', description: 'Description' }, options1))
     assertType<Promise<boolean>>(tinvoke('delete_item', { itemId: 456 }, options2))
   })
 
-  test('should handle complex argument structures', () => {
+  it('should handle complex argument structures', () => {
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: '', description: '' }))
     assertType<Promise<{ taskId: string }>>(tinvoke('create_task', { title: 'Very Long Task Name With Spaces', description: 'A very detailed description' }))
     assertType<Promise<boolean>>(tinvoke('delete_item', { itemId: 0 }))
     assertType<Promise<boolean>>(tinvoke('delete_item', { itemId: 999999 }))
   })
 
-  test('should validate RouteName type', () => {
+  it('should validate RouteName type', () => {
     const route1: RouteName = 'get_user'
     const route2: RouteName = 'create_task'
     const route3: RouteName = 'delete_item'
     const route4: RouteName = 'list_files'
     const route5: RouteName = 'update_settings'
 
-    assertType<Promise<{ id: number; name: string; email: string }>>(tinvoke(route1))
+    assertType<Promise<{ id: number, name: string, email: string }>>(tinvoke(route1))
     assertType<Promise<{ taskId: string }>>(tinvoke(route2, { title: 'Test', description: 'Test description' }))
     assertType<Promise<boolean>>(tinvoke(route3, { itemId: 123 }))
     assertType<Promise<string[]>>(tinvoke(route4))
     assertType<Promise<void>>(tinvoke(route5, { theme: 'dark', language: 'en' }))
   })
 
-  test('should handle theme options correctly', () => {
+  it('should handle theme options correctly', () => {
     assertType<Promise<void>>(tinvoke('update_settings', { theme: 'light', language: 'en' }))
     assertType<Promise<void>>(tinvoke('update_settings', { theme: 'dark', language: 'fr' }))
   })
 
-  test('error cases - should not compile', () => {
+  it('error cases - should not compile', () => {
     // @ts-expect-error - Passing args to route that doesn't need them
     tinvoke('get_user', { someArg: 'value' })
 

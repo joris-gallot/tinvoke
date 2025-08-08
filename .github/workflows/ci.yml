@@ -23,6 +23,18 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Lint
+        run: pnpm lint
+
   tests:
     runs-on: ubuntu-latest
 

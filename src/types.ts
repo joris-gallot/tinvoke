@@ -1,4 +1,4 @@
-export type RouteDefinition<Response, Args = undefined> = {
-  response: Response;
-  args: Args;
-};
+export interface RouteDefinition<Response, Args = undefined> {
+  response: Response
+  args: Args
+}
