@@ -4,7 +4,7 @@ export default defineBuildConfig(
   {
     entries: [
       {
-        input: 'npm/tinvoke.ts',
+        input: 'src/tinvoke.ts',
         name: 'tinvoke',
       },
     ],
