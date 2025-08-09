@@ -1,6 +1,6 @@
 # tinvoke
 
-Type-safe wrapper for Tauri's invoke function with full TypeScript support.
+Type-safe wrapper for Tauri's invoke function.
 
 ## Installation
 
