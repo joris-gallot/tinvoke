@@ -1,7 +1,17 @@
 import type { InvokeOptions } from '@tauri-apps/api/core'
-import type { RouteName } from '../tinvoke.js'
+import type { RouteDefinition, RouteName } from '../tinvoke.js'
 import { assertType, beforeEach, describe, it, vi } from 'vitest'
 import { tinvoke } from '../tinvoke.js'
+
+declare module '../tinvoke.js' {
+  interface RouteMap {
+    get_user: RouteDefinition<{ id: number, name: string, email: string }>
+    create_task: RouteDefinition<{ taskId: string }, { title: string, description: string }>
+    delete_item: RouteDefinition<boolean, { itemId: number }>
+    list_files: RouteDefinition<string[]>
+    update_settings: RouteDefinition<void, { theme: 'light' | 'dark', language: string }>
+  }
+}
 
 vi.mock('@tauri-apps/api/core', () => ({
   invoke: vi.fn(() => Promise.resolve(null)),
