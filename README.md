@@ -33,7 +33,7 @@ declare module 'tinvoke' {
 import { tinvoke } from 'tinvoke'
 
 // user will be typed as User
-const user = await tinvoke('get_user')
+const user = await tinvoke('get_user', { name: 'Alice' })
 ```
 
 ## License
