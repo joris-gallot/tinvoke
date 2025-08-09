@@ -1,38 +1,38 @@
 import type { InvokeOptions } from '@tauri-apps/api/core'
-import type { RouteMap, RouteName } from './types.js'
+import type { CommandName, CommandsMap } from './types.js'
 import { invoke } from '@tauri-apps/api/core'
 
-export type { RouteDefinition, RouteMap, RouteName } from './types.js'
+export type { Command, CommandName, CommandsMap } from './types.js'
 
-// Overload for routes without args (no second parameter)
-export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends never ? C : never
-): Promise<RouteMap[C]['response']>
+// Overload for commands without args (no second parameter)
+export function tinvoke<C extends CommandName>(
+  cmd: CommandsMap[C]['args'] extends never ? C : never
+): Promise<CommandsMap[C]['response']>
 
-// Overload for routes without args (with options)
-export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends never ? C : never,
+// Overload for commands without args (with options)
+export function tinvoke<C extends CommandName>(
+  cmd: CommandsMap[C]['args'] extends never ? C : never,
   options: InvokeOptions
-): Promise<RouteMap[C]['response']>
+): Promise<CommandsMap[C]['response']>
 
-// Overload for routes with args (no options)
-export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends never ? never : C,
-  args: RouteMap[C]['args']
-): Promise<RouteMap[C]['response']>
+// Overload for commands with args (no options)
+export function tinvoke<C extends CommandName>(
+  cmd: CommandsMap[C]['args'] extends never ? never : C,
+  args: CommandsMap[C]['args']
+): Promise<CommandsMap[C]['response']>
 
-// Overload for routes with args (with options)
-export function tinvoke<C extends RouteName>(
-  cmd: RouteMap[C]['args'] extends never ? never : C,
-  args: RouteMap[C]['args'],
+// Overload for commands with args (with options)
+export function tinvoke<C extends CommandName>(
+  cmd: CommandsMap[C]['args'] extends never ? never : C,
+  args: CommandsMap[C]['args'],
   options: InvokeOptions
-): Promise<RouteMap[C]['response']>
+): Promise<CommandsMap[C]['response']>
 
-export function tinvoke<C extends RouteName>(
+export function tinvoke<C extends CommandName>(
   cmd: C,
-  argsOrOptions?: RouteMap[C]['args'] | InvokeOptions,
+  argsOrOptions?: CommandsMap[C]['args'] | InvokeOptions,
   options?: InvokeOptions,
-): Promise<RouteMap[C]['response']> {
+): Promise<CommandsMap[C]['response']> {
   // If we have 3 arguments, second is args, third is options
   if (arguments.length === 3) {
     // @ts-expect-error // TypeScript will infer the correct types based on overloads
@@ -41,7 +41,7 @@ export function tinvoke<C extends RouteName>(
 
   // If we have 2 arguments, need to determine if second is args or options
   if (arguments.length === 2) {
-    // For routes that don't need args, second parameter is options
+    // For commands that don't need args, second parameter is options
     if (argsOrOptions && typeof argsOrOptions === 'object'
       && ('headers' in argsOrOptions || 'timeout' in argsOrOptions || 'signal' in argsOrOptions)) {
       return invoke(cmd, undefined, argsOrOptions as InvokeOptions)

@@ -18,11 +18,11 @@ Follow the setup guide at [ts-rs](https://github.com/Aleph-Alpha/ts-rs#get-start
 
 ```typescript
 import type { User } from 'path/to/bindings/User'
-import type { RouteDefinition } from 'tinvoke'
+import type { Command } from 'tinvoke'
 
 declare module 'tinvoke' {
-  interface RouteMap {
-    get_user: RouteDefinition<User, { name: string }>
+  interface CommandsMap {
+    get_user: Command<User, { name: string }>
   }
 }
 ```

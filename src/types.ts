@@ -1,8 +1,8 @@
-export interface RouteDefinition<Response, Args = never> {
+export interface Command<Response, Args = never> {
   response: Response
   args: Args
 }
 
-export interface RouteMap {}
+export interface CommandsMap {}
 
-export type RouteName = keyof RouteMap
+export type CommandName = keyof CommandsMap
