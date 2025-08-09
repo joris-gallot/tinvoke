@@ -17,8 +17,8 @@ Follow the setup guide at [ts-rs](https://github.com/Aleph-Alpha/ts-rs#get-start
 ### 2. Configure TypeScript types
 
 ```typescript
-import type { RouteDefinition } from 'tinvoke'
 import type { User } from 'path/to/bindings/User'
+import type { RouteDefinition } from 'tinvoke'
 
 declare module 'tinvoke' {
   interface RouteMap {
