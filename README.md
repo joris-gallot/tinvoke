@@ -1,6 +1,6 @@
 # tinvoke
 
-Type-safe wrapper for Tauri's invoke function.
+Type-safe wrapper for [Tauri](https://tauri.app)'s invoke function.
 
 ## Installation
 
