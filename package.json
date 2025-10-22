@@ -30,7 +30,7 @@
     "lint:fix": "eslint --fix"
   },
   "peerDependencies": {
-    "@tauri-apps/api": "^2.8.0"
+    "@tauri-apps/api": "^2.9.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.4.1",
