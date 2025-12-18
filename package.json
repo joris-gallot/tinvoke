@@ -2,7 +2,7 @@
   "name": "tinvoke",
   "type": "module",
   "version": "0.1.0",
-  "packageManager": "pnpm@10.25.0",
+  "packageManager": "pnpm@10.26.0",
   "description": "A type-safe wrapper for Tauri's invoke function",
   "author": "Joris Gallot",
   "license": "MIT",
