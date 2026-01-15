@@ -20,7 +20,7 @@
   "types": "dist/tinvoke.d.ts",
   "files": ["dist"],
   "engines": {
-    "node": "24.12.0"
+    "node": "24.13.0"
   },
   "scripts": {
     "build": "unbuild",
